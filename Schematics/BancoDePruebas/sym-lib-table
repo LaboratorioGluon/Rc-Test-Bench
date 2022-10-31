@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "YAAJ_BluePill_Part_Like")(type "Legacy")(uri "E:/LaboratorioGluon/Proyectos/@Common/KicadLibs/YAAJ_BluePill_Part_Like.lib")(options "")(descr ""))
+  (lib (name "Library")(type "KiCad")(uri "E:/LaboratorioGluon/Proyectos/BancodePruebas/Schematics/Library.kicad_sym")(options "")(descr ""))
+)
