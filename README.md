@@ -12,4 +12,4 @@ Projecto para caracterización de motores RC.
 
 
 
-![Alt text](Imagenes/render3D.jpg?raw=true "Render PCB")
+![Alt text](Imagenes/Render3D.jpg?raw=true "Render PCB")
