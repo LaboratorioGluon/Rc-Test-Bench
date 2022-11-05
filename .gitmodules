@@ -1,0 +1,12 @@
+[submodule "CodigoFuente/RcTestBench/lib/HX711"]
+	path = CodigoFuente/RcTestBench/lib/HX711
+	url = https://github.com/LaboratorioGluon/HX711
+[submodule "CodigoFuente/RcTestBench/lib/Servo"]
+	path = CodigoFuente/RcTestBench/lib/Servo
+	url = https://github.com/LaboratorioGluon/Servo.git
+[submodule "CodigoFuente/RcTestBench/lib/CircularBuffer"]
+	path = CodigoFuente/RcTestBench/lib/CircularBuffer
+	url = https://github.com/LaboratorioGluon/CircularBuffer.git
+[submodule "CodigoFuente/RcTestBench/lib/TLV"]
+	path = CodigoFuente/RcTestBench/lib/TLV
+	url = https://github.com/LaboratorioGluon/TLV.git
