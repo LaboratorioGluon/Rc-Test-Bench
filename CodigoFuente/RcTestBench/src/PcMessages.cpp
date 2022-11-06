@@ -54,7 +54,5 @@ PcMessagesController::waitForPing(uint32_t msToWait){
         }
     }
 
-    
-
-
+    return MESSAGE_OK;
 }

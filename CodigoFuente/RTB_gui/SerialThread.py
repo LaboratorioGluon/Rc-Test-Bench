@@ -16,30 +16,38 @@ class SerialReader(QRunnable):
 
     def __init__(self):
         super(SerialReader, self).__init__()
-        self.signals = SerialReaderSignals()
-
-        
+        self.signals = SerialReaderSignals()        
         self.running = False
         self.hasToRun = False
+
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.sendPing)  # execute `display_time`
+        self.timer.setInterval(250)  # 1000ms = 1s
+        
+
 
     def isRunning(self):
         return self.running
 
     def Connect(self, port):
         self.ser = serial.Serial(port,115200,timeout=3)
+        self.timer.start()
+
+    def sendPing(self):
+        #print("Enviando ping")
+        self.sendCmd(0xAA)
 
     def run(self):
         self.running = True
         self.hasToRun = True
         print("Thread start!")
-
+        
         localbuf = ""
         while self.hasToRun:
             try:
                 serialdata=self.ser.read_all().decode('utf-8')
                 self.signals.newData.emit(serialdata)
                 localbuf = localbuf + serialdata
-
 
                 if '\n' in localbuf:
                     localbuf = localbuf.replace("[TEST_DATA]:","")

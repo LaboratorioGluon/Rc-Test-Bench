@@ -6,6 +6,8 @@
 #include "CircularBuffer.h"
 
 
+
+
 class PcMessagesController
 {
 public:
@@ -31,13 +33,15 @@ public:
 
     enum MESSAGE_RET waitForPing(uint32_t msToWait);
 
+    //void processMessages();
+
 private:
-
-    
-
     char sendBuffer[200];
 
     CircularBuffer<uint8_t> *recvBuffer;
+
+    //CircularBuffer<uint8_t> messagesBuffers[];
+
 };
 
 #endif //__PC_MESSAGES_H__
