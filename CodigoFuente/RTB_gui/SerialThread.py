@@ -7,6 +7,8 @@ from serial.serialutil import Timeout
 import struct
 import serial.tools.list_ports
 
+import re
+
 
 class SerialReaderSignals(QObject):
     newData = pyqtSignal(object)
@@ -49,13 +51,33 @@ class SerialReader(QRunnable):
                 self.signals.newData.emit(serialdata)
                 localbuf = localbuf + serialdata
 
+                
                 if '\n' in localbuf:
+                    lines=localbuf.split("\n")
+                    for l in lines[:-1]:
+                        print(l)
+                        #Tenemos las lineas buenas
+                        search=re.search("\[(\w+)\]:(.*)", l)
+                        todo=search.group(0)
+                        tag = search.group(1)
+                        content = search.group(2)
+
+                        if "TEST_DATA" in tag:
+                            data = content.split(":")
+                            data2 = [int(d) for d in data]
+                            print("To plot:" + str(data2))
+                            self.signals.newValues.emit(data2)
+
+                    localbuf = lines[-1]
+
+                """if '\n' in localbuf:
                     localbuf = localbuf.replace("[TEST_DATA]:","")
                     data = localbuf.replace("\n","").split(":")
                     data2 = [int(d) for d in data]
                     print("To plot:" + str(data2))
                     self.signals.newValues.emit(data2)
                     localbuf = ""
+                """
 
 
             except:
@@ -69,7 +91,6 @@ class SerialReader(QRunnable):
         self.running = False
 
     def sendCmd(self, cmd, data=0):
-        print("Enviando Cmd:"+str(cmd))
         outdata = struct.pack("BBB",cmd,1,data)
         self.ser.write(outdata)
 

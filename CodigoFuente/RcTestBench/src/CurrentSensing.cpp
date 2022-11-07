@@ -142,7 +142,7 @@ uint32_t CurrentSensing::readCurrent()
         lastRead=readLowCurrentPath();
     }
 
-    //currentPathLogic(lastRead);
+    currentPathLogic(lastRead);
 
 
     return lastRead;
@@ -210,9 +210,9 @@ uint32_t CurrentSensing::readHighCurrentPath(uint8_t muestras)
 
     uint32_t valueInMa = readHighCurrentADCMv(muestras);
 
-    /*valueInMa = (valueInMa > highCurrentZeroMv)? valueInMa - highCurrentZeroMv:0;*/
+    valueInMa = (valueInMa > highCurrentZeroMv)? valueInMa - highCurrentZeroMv:0;
 
-    /*valueInMa = valueInMa*10;*/
+    valueInMa = valueInMa*10;
 
     return valueInMa;
 }

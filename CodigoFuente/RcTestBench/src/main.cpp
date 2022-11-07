@@ -147,6 +147,7 @@ int main()
     float pwmOut = 1.4;
     float delta_pwm;
     char buf[150];
+    uint32_t buf_cnt=0;
     volatile float fValue;
 
     uint8_t bufferlocal[200];
@@ -158,6 +159,8 @@ int main()
 
     uint32_t swWatchdogTime=0;
     uint8_t isOk;
+
+
 
     while (1)
     {
@@ -175,7 +178,6 @@ int main()
 
             while (!usbBuffer.isEmpty())
             {
-
                 usbBuffer.Read(&last_data);
                 gTlvManager.addData(last_data);
             }
@@ -203,7 +205,7 @@ int main()
                     masterStartMeasuring();
 
 
-                    Sensores::currentSensing.setConfig(100, 10);
+                    Sensores::currentSensing.setConfig(300, 10);
 
                     isOk = true;
                     last_received_ping = HAL_GetTick();
@@ -214,30 +216,26 @@ int main()
                         // Si llega algo por USB cancelamos.
                         if (!usbBuffer.isEmpty())
                         {
+                            
                             while (!usbBuffer.isEmpty())
                             {
                                 usbBuffer.Read(&last_data);
                                 gTlvManager.addData(last_data);
                             }
-                            if(gTlvManager.getLastTlv(&last_tlv) == TLV_OK)
+
+                            
+                            while(gTlvManager.getLastTlv(&last_tlv) == TLV_OK)
                             {
+                                //PcMessages.sendDebug("Received TAG: %d", last_tlv.tag);
                                 // Tenemos un mensaje pero no es ping
                                 if(last_tlv.tag != CMD::PING)
                                 {
-                                    break;
+                                    isOk = false;
                                 }
                                 else
                                 {
-                                    PcMessages.sendDebug("PING Received!");
                                     last_received_ping = HAL_GetTick();
-
                                 }
-                            }
-                            else
-                            {
-                                // Si hay algo en el USB, pero no sabemos que 
-                                // es, salir porsiaca.
-                                break;
                             }
                             
                         }
@@ -245,7 +243,7 @@ int main()
                         // Comprobamos tiempo desde ultimo ping
                         if((HAL_GetTick()-last_received_ping) > EMERGENCY_STOP_TIME)
                         {
-                            break;
+                            isOk = false;
                         }
 
                         pwmOut = 1.0f + iteracion * delta_pwm;

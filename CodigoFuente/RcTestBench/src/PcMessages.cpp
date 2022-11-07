@@ -34,7 +34,7 @@ void PcMessagesController::sendDebug(const char *format, ...)
     char format2[200];
     va_list args;
     va_start(args, format);
-    sprintf(format2, "[DEBUG]:%s", format);
+    sprintf(format2, "[DEBUG]:%s\n", format);
     vsprintf(sendBuffer, format2, args);
     CDC_Transmit_FS((uint8_t *)sendBuffer, strlen(sendBuffer));
     va_end(args);
