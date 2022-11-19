@@ -159,7 +159,7 @@ int main()
 
     uint32_t swWatchdogTime=0;
     uint8_t isOk;
-
+    
 
 
     while (1)
@@ -246,18 +246,26 @@ int main()
                             isOk = false;
                         }
 
-                        pwmOut = 1.0f + iteracion * delta_pwm;
-                        ESC.setOutMs(pwmOut);
-                        HAL_Delay(10);
-                        fValue = Sensores::hx711.getValue(5);
+                        // Comprobacion nivel de bateria
+                        if( Sensores::lipoFeedback.GetVoltageMv(3) < 7500)
+                        {
+                            isOk = false;
+                        }
 
-                        PcMessages.sendTestData(
-                            pwmOut,
-                            fValue,
-                            Sensores::currentSensing.readCurrent(),
-                            Sensores::lipoFeedback.GetVoltage(1)
-                        );
+                        if (isOk)
+                        {
+                            pwmOut = 1.0f + iteracion * delta_pwm;
+                            ESC.setOutMs(pwmOut);
+                            HAL_Delay(10);
+                            fValue = Sensores::hx711.getValue(5);
 
+                            PcMessages.sendTestData(
+                                pwmOut,
+                                fValue,
+                                Sensores::currentSensing.readCurrent(),
+                                Sensores::lipoFeedback.GetVoltageMv(3)
+                            );
+                        }
                         swWatchdogTime = HAL_GetTick();
 
                         /*while(usbBuffer.isEmpty())

@@ -12,7 +12,7 @@ public:
 
     void Init();
 
-    uint32_t GetVoltage(uint32_t pNumMeasures);
+    uint32_t GetVoltageMv(uint32_t pNumMeasures);
 
 private:
 

@@ -8,6 +8,7 @@ import sys
 from SerialThread import SerialReader
 
 from tab1 import Tab1Info
+from configTab import configTab
 
 import pyqtgraph as pg
 pg.setConfigOption('background','w')
@@ -28,13 +29,14 @@ class Ui(QMainWindow):
         self.sr.signals.newData.connect(self.updateSerial)
         self.sr.signals.newValues.connect(self.updatePlot)
 
+
         self.setpwm = self.findChild(QPushButton, 'setPwmButton')
         self.setpwm.clicked.connect(self.setPwm)
 
         self.startbutton = self.findChild(QPushButton, 'StartProcess')
         self.startbutton.clicked.connect(self.startRun)
 
-        self.ReadCurrent.clicked.connect(self.startReadCurrent)
+        
         self.emergencyStop.clicked.connect(lambda data:self.sr.sendCmd(1,1))
 
         self.serialMonitor = self.findChild(QPlainTextEdit, 'serialMonitor')
@@ -44,6 +46,9 @@ class Ui(QMainWindow):
         
         self.tab1 = Tab1Info()
         self.tab1.Init(self)
+
+        self.configTab = configTab()
+        self.configTab.Init(self)
 
 
         # Init plot
@@ -77,6 +82,7 @@ class Ui(QMainWindow):
     def updatePlot(self, data):
         self.dataX.append(data[0])
         #for i in range(len(data)-1):
+        self.voltageLabel.setText(str(data[3]/1000) + " V")
         for i in range(2):
             self.dataY[i].append(data[i+1])
             #self.curvas[i].setData(self.dataX, self.dataY[i])
@@ -103,6 +109,8 @@ class Ui(QMainWindow):
         #self.dataX = []
         #self.dataY = []
         #self.curvas[-1].setData(self.dataX, self.dataY)
+        if self.configTab.isConfigReady == False:
+            self.serialMonitor.insertPlainText("Configuration NOT ready!\n")
         self.dataX = []
         self.dataY = [[], []]
         for i in range(2):

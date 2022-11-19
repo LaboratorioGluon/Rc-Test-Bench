@@ -70,15 +70,6 @@ class SerialReader(QRunnable):
 
                     localbuf = lines[-1]
 
-                """if '\n' in localbuf:
-                    localbuf = localbuf.replace("[TEST_DATA]:","")
-                    data = localbuf.replace("\n","").split(":")
-                    data2 = [int(d) for d in data]
-                    print("To plot:" + str(data2))
-                    self.signals.newValues.emit(data2)
-                    localbuf = ""
-                """
-
 
             except:
                 print("Error:")
@@ -103,5 +94,4 @@ class SerialReader(QRunnable):
         outports = {}
         for port, desc, hwid in sorted(ports):
                 outports[port] = desc
-                #print("{}: {} [{}]".format(port, desc, hwid))
         return outports

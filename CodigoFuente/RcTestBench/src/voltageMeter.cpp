@@ -1,6 +1,6 @@
 #include "voltageMeter.h"
 
-
+#define ADC_TO_MV (0.8056640625f)
     
 voltageMeter::voltageMeter(GPIO_TypeDef *pAdcPort, uint32_t pAdcPin):
     mAdcPort(pAdcPort), mAdcPin(pAdcPin)
@@ -48,7 +48,7 @@ void voltageMeter::Init()
 
 }
 
-uint32_t voltageMeter::GetVoltage(uint32_t pNumMeasures)
+uint32_t voltageMeter::GetVoltageMv(uint32_t pNumMeasures)
 {
     uint32_t suma = 0;
     for( uint8_t i =0; i < pNumMeasures; i++){
@@ -65,6 +65,6 @@ uint32_t voltageMeter::GetVoltage(uint32_t pNumMeasures)
         HAL_ADC_PollForConversion(&mAdcHandle, 1);
         suma += HAL_ADC_GetValue(&mAdcHandle);
     }
-    suma = suma / pNumMeasures;
+    suma = (suma / pNumMeasures)*ADC_TO_MV*5.7f;
     return suma;
 }
