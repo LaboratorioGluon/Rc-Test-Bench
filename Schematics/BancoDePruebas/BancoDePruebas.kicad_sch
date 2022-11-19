@@ -4,6 +4,12 @@
 
   (paper "A4")
 
+  (title_block
+    (title "Banco de Pruebas")
+    (date "2022-11-13")
+    (company "LaboratorioGluon")
+  )
+
   (lib_symbols
     (symbol "Amplifier_Operational:LM358" (pin_names (offset 0.127)) (in_bom yes) (on_board yes)
       (property "Reference" "U" (id 0) (at 0 5.08 0)
@@ -2192,7 +2198,7 @@
   (no_connect (at 196.85 50.8) (uuid 4e4f3cd8-594a-4ab4-8ddf-b196ffa90109))
   (no_connect (at 196.85 48.26) (uuid 4e4f3cd8-594a-4ab4-8ddf-b196ffa9010a))
   (no_connect (at 158.115 43.815) (uuid a9a4dc13-2b14-41e4-a29c-d809c98cc0e6))
-  (no_connect (at 158.115 46.355) (uuid a9a4dc13-2b14-41e4-a29c-d809c98cc0e6))
+  (no_connect (at 158.115 46.355) (uuid a9a4dc13-2b14-41e4-a29c-d809c98cc0e7))
   (no_connect (at 193.04 122.555) (uuid b7f2b684-2356-466a-8c69-232cdf32b745))
   (no_connect (at 177.8 125.095) (uuid b7f2b684-2356-466a-8c69-232cdf32b746))
   (no_connect (at 177.8 120.015) (uuid b7f2b684-2356-466a-8c69-232cdf32b747))

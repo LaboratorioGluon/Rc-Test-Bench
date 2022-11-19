@@ -15,7 +15,7 @@ class configTab:
         self.lipoToVoltage = [3.75, 7.49, 11.24, 14.99]
         self.isConfigReady = False
         self.lastValidConfig = [0, 0]
-            
+        self.dataOk = [False, False]
         
 
     def Init(self, mainUI):
@@ -29,7 +29,8 @@ class configTab:
         mainUI.maxPowerLineEdit.textChanged.connect(self.maxPowerChanged)
         self.mainUI = mainUI   
         mainUI.powerOffVoltageLineEdit.setText(str(self.lipoToVoltage[0]))
-        self.dataOk = [False, False]
+        self.minVoltageChanged(str(self.lipoToVoltage[0]))
+        
 
 
     def maxPowerChanged(self, newValue):
